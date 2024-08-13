@@ -13,7 +13,8 @@
       <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
 	   Teste
 </button>
-<button onclick="ConvesPage()">teste</button>
+<button onclick="ConvesPage()">teste Convenio</button>
+<button onclick="callConsultas()">teste Consultas</button>
   </div>
 </nav>
 </header>
@@ -31,5 +32,6 @@
 		crossorigin="anonymous"></script>
 	<script src="app/webroot/js/doutor_chamada.js"></script>
 	<script src="app/webroot/js/convenio_chamadas.js"></script>
+	<script src="app/webroot/js/consultas_chamadas.js"></script>
 </body>
 </html>

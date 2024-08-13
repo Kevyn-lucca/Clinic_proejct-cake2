@@ -51,6 +51,9 @@ class MedicosController extends AppController
     }
 
     public function delete($id = null) {
+        if(!$id){
+            throw new NotFoundException(__('Invalid data'));
+        }
         $this->layout = "ajax";
         $medic = $this->Medics->findById($id);
         $this->Medics->delete($id); 
