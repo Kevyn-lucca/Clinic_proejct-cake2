@@ -15,8 +15,6 @@ class MedicosController extends AppController
         // print_r($medics);exit;
 
         $this->set('medics', $medics);
-
-        
     }
 
     public function add()
@@ -39,22 +37,20 @@ class MedicosController extends AppController
         if (!$id) {
             throw new NotFoundException(__('Invalid data'));
         }
-
-        $medic = $this->Medic->findById($id);
+        
+        $medic = $this->Medisc->findById($id);
         $this->set('medics', $medic);
 
         if ($this->request->is(array('post', 'put'))) {
             $this->Medic->id = $id;
-            $this->Post->save($this->request->data); 
+            $this->Medic->save($this->request->data); 
         }
-
         if (!$this->request->data) {
             $this->request->data = $medic;
         }
     }
 
     public function delete($id = null) {
-
         $this->layout = "ajax";
         $medic = $this->Medics->findById($id);
         $this->Medics->delete($id); 

@@ -27,7 +27,7 @@
         <button class="btn btn-danger" onclick="deleteMedic(<?= $medic['Medics']['id']?>)">
             Delete
         </button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" onclick="buscarPostsEdit()">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" onclick="GetMedicsEdit(<?= $medic['Medics']['id']?>)">
             Editar
         </button></td>
         <?php endforeach; ?>

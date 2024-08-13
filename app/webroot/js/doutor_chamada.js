@@ -19,10 +19,10 @@ function GetMedicsAdd() {
 	});
 }
 
-function GetMedicsEdit() {
+function GetMedicsEdit(id) {
 	$.ajax({
 		method: "GET",
-		url: `medicos/edit/`,
+		url: `medicos/edit/${id}`,
 		success: (response) => {
 			$("#MainModal").modal("toggle");
 			$("#MainModalContent").html(response);
@@ -44,9 +44,6 @@ function editMedic(id) {
 	});
 }
 
-
-
-
 function addMedic() {
 	let formdata = $("#MeddicAddForm").serialize();
 	$.ajax({
@@ -63,7 +60,7 @@ function addMedic() {
 
 function deleteMedic(id){
 	$.ajax({
-		method: "PUT",
+		method: "DELETE",
 		url: `medicos/delete/${id}`,
 		success: () =>{
 			HomePage()
