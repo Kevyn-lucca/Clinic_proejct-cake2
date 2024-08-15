@@ -13,18 +13,15 @@
     </tr>
   </thead>
   <tbody>
-  <?php foreach ($consultas as $consulta): ?>
+  <?php foreach ($convenios as $convenio): ?>
     <tr>
-        <th scope="row"><?= h($consulta['Consulta']['id']) ?></th>
-        <td><?= h($consulta['Paciente']['nome']) ?></td>
-        <td><?= h($consulta['Medico']['nome']) ?></td>
-        <td><?= h($consulta['Consulta']['data']) ?></td>
-        <td><?= h($consulta['Consulta']['hora']) ?></td>
+        <th scope="row"><?= h($convenio['Convenios']['id']) ?></th>
+        <td><?= h($convenio['Convenios']['nome']) ?></td>
         <td>
-            <button class="btn btn-danger" onclick="ConvesDelete(<?= h($consulta['Consulta']['id']) ?>)">
+            <button class="btn btn-danger" onclick="ConvesDelete(<?= h($convenio['Convenios']['id']) ?>)">
                 Delete
             </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" onclick="GetConvesEdit(<?= h($consulta['Consulta']['id']) ?>)">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" onclick="GetConvesEdit(<?= h($convenio['Convenios']['id']) ?>)">
                 Editar
             </button>
         </td>

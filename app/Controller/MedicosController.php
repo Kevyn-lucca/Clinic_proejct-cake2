@@ -38,12 +38,12 @@ class MedicosController extends AppController
             throw new NotFoundException(__('Invalid data'));
         }
         
-        $medic = $this->Medisc->findById($id);
+        $medic = $this->Medics->findById($id); // Corrigido aqui
         $this->set('medics', $medic);
-
+    
         if ($this->request->is(array('post', 'put'))) {
-            $this->Medic->id = $id;
-            $this->Medic->save($this->request->data); 
+            $this->Medics->id = $id;
+            $this->Medics->save($this->request->data); 
         }
         if (!$this->request->data) {
             $this->request->data = $medic;
@@ -61,12 +61,3 @@ class MedicosController extends AppController
 }
 
    //usar essa mesma logica para o desmarque de consultas
-   
-// $MedicData = array(
-//     'Deletado' => array(
-//         'id' => $medic['Medics']['id'],
-//         'nome' => $medic['Medics']['nome'],
-//         'crm' => $medic['Medics']['crm'],
-//         'data_delecao' => date('Y-m-d H:i:s')
-//     )
-// );
