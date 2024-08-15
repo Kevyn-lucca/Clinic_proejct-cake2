@@ -1,21 +1,39 @@
+
+<div class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header card-header-info">
+<h4 class="card-title ">Doutores</h4>
+</div>
+<div class="card-body">
 <div class="mb-4">
-    <button type="button" class="btn btn-primary" onclick="GetMedicsAdd()">
-        Add
+    <button type="button" class="btn btn-dark" onclick="GetMedicsAdd()">
+        Adicionar
     </button>
 </div>
-<div style="overflow: auto;">
+<div class="table-responsive">
 <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Crm</th>
-      <th scope="col">Date</th>
-      <th scope="col">Edit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($medics as $medic): ?>
+<thead class=" text-primary">
+<th>
+ID
+</th>
+<th>
+Nome
+</th>
+<th>
+CRM
+</th>
+<th>
+Data
+</th>
+<th>
+Editar
+</th>
+</thead>
+<tbody>
+<?php foreach ($medics as $medic): ?>
     <tr>
       <th scope="row"><?= $medic['Medics']['id']?></th>
       <td>
@@ -32,7 +50,4 @@
         </button></td>
         <?php endforeach; ?>
     </tr>
-   
-  </tbody>
-</table>
-</div>
+</tbody>

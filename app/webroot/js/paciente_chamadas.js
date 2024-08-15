@@ -54,6 +54,8 @@ function PaciCallAdd(){
 }
 
 
+
+
 function addPaci() {
 	let formdata = $("#PacientesAddForm").serialize();
 	$.ajax({
@@ -66,3 +68,6 @@ function addPaci() {
 		},
 	});
 }
+
+
+

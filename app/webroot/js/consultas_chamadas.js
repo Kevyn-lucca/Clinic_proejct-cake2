@@ -21,7 +21,7 @@ function GetConsultasEdit(id) {
 }
 
 function ConsultasEdit(id){
-	let formdata = $("#ConvsEditForm").serialize();
+	let formdata = $("#ConsultasEditForm").serialize();
 	$.ajax({
 		method: "POST",
 		url: `Consultas/edit/${id}`,

@@ -1,4 +1,4 @@
-<h1 class="text-center">Adicionar Medico</h1>
+<h1 class="text-center">Adicionar Convenio</h1>
 <form id="ConvesAddForm">
     <div class="mb-3">
         <label for="nome">Nome:</label>

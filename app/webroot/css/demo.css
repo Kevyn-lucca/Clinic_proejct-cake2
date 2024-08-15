@@ -50,3 +50,11 @@
     margin-top:70px
   }
   
+  .Button-nav:hover{
+    cursor: pointer;
+  }
+
+  
+
+  .nav-item:hover{
+    box-shadow: rgba(128, 0, 128, 0.45) 0px 25px 20px -20px;  } 

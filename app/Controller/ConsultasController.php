@@ -105,15 +105,13 @@ class ConsultasController extends AppController {
 
     public function add() {
         $this->layout = 'ajax';
-        if ($this->request->is('post')) {
+        if($this->request->is('post')){ 
             $this->Consulta->create();
-            if ($this->Consulta->save($this->request->data)) {
-                $this->Session->setFlash(__('Consulta adicionada com sucesso.'));
-            } else {
-                $this->Session->setFlash(__('Não foi possível adicionar a consulta. Por favor, tente novamente.'));
-            }
+           $this->Consulta->save($this->request->data); 
+        
         }
 
+        
         // Prepara os dados para o formulário
         $pacientes = $this->Paciente->find('all');
         $medicos = $this->Medics->find('all');
@@ -124,26 +122,21 @@ class ConsultasController extends AppController {
 
     public function edit($id = null) {
         $this->layout = 'ajax';
-        if (!$id || !$this->Consulta->exists($id)) {
-            throw new NotFoundException(__('Consulta inválida'));
+        if (!$id) {
+            throw new NotFoundException(__('Invalid data'));
         }
-    
+        
         if ($this->request->is(array('post', 'put'))) {
-            if ($this->Consulta->save($this->request->data)) {
-                $this->Session->setFlash(__('Consulta atualizada com sucesso.'));
-            } else {
-                $this->Session->setFlash(__('Não foi possível atualizar a consulta. Por favor, tente novamente.'));
-            }
-        } else {
-            $options = array('conditions' => array('Consulta.' . $this->Consulta->primaryKey => $id));
-            $this->request->data = $this->Consulta->find('first', $options);
+            $this->Consulta->id = $id;
+            $this->Consulta->save($this->request->data); 
         }
 
-        // Prepara os dados para o formulário
-        $pacientes = $this->Paciente->find('list');
-        $medicos = $this->Medico->find('list');
-        $tipos = $this->Tipo->find('list');
-        $convenios = $this->Convenio->find('list');
+        $consultas = $this->Consulta->findById($id);
+        $this->set('consultas', $consultas);
+        $pacientes = $this->Paciente->find('all');
+        $medicos = $this->Medics->find('all');
+        $tipos = $this->Tipos->find('all');
+        $convenios = $this->Convenios->find('all');
         $this->set(compact('pacientes', 'medicos', 'tipos', 'convenios'));
     }
 
@@ -165,7 +158,7 @@ public function delete($id = null) {
 
     // Verifica se a consulta já está desmarcada
     $consultaDesmarcada = $this->ConsultaDesmarcada->find('first', array(
-        'conditions' => array('ConsultaDesmarcada.paciente_id' => $consulta['Consulta']['paciente_id'], 'ConsultaDesmarcada.doutor_id' => $consulta['Consulta']['doutor_id'], 'ConsultaDesmarcada.tipo_id' => $consulta['Consulta']['tipo_id'], 'ConsultaDesmarcada.convenio_id' => $consulta['Consulta']['convenio_id'], 'ConsultaDesmarcada.data' => $consulta['Consulta']['data'], 'ConsultaDesmarcada.hora' => $consulta['Consulta']['hora'])
+        'conditions' => array('ConsultaDesmarcada.paciente_id' => $consulta['Consulta']['paciente_id'], 'ConsultaDesmarcada.doutor_id' => $consulta['Consulta']['doutor_id'], 'ConsultaDesmarcada.tipo_id' => $consulta['Consulta']['tipo_id'], 'ConsultaDesmarcada.convenio_id' => $consulta['Consulta']['convenio_id'], 'ConsultaDesmarcada.data_consulta' => $consulta['Consulta']['data_consulta'], 'ConsultaDesmarcada.hora' => $consulta['Consulta']['hora'])
     ));
 
     if ($consultaDesmarcada) {
@@ -184,7 +177,7 @@ public function delete($id = null) {
                 'doutor_id' => $consulta['Consulta']['doutor_id'],
                 'tipo_id' => $consulta['Consulta']['tipo_id'],
                 'convenio_id' => $consulta['Consulta']['convenio_id'],
-                'data' => $consulta['Consulta']['data'],
+                'data_consulta' => $consulta['Consulta']['data_consulta'],
                 'hora' => $consulta['Consulta']['hora'],
                 'data_delecao' => date('Y-m-d H:i:s') // Adiciona a data da desmarcação
             )
@@ -225,7 +218,7 @@ public function rebook($id = null) {
             'doutor_id' => $consultaDesmarcada['ConsultaDesmarcada']['doutor_id'],
             'tipo_id' => $consultaDesmarcada['ConsultaDesmarcada']['tipo_id'],
             'convenio_id' => $consultaDesmarcada['ConsultaDesmarcada']['convenio_id'],
-            'data' => $consultaDesmarcada['ConsultaDesmarcada']['data'],
+            'data_consulta' => $consultaDesmarcada['ConsultaDesmarcada']['data_consulta'],
             'hora' => $consultaDesmarcada['ConsultaDesmarcada']['hora']
         )
     );

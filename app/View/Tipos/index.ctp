@@ -1,18 +1,31 @@
+<div class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header card-header-info">
+<h4 class="card-title ">Tipos de consulta</h4>
+</div>
+<div class="card-body">
 <div class="mb-4">
-    <button type="button" class="btn btn-primary" onclick="tipoCallAdd()">
-        Add
+    <button type="button" class="btn btn-dark" onclick="tipoCallAdd()">
+        Adicionar
     </button>
 </div>
-<div style="overflow: auto;">
+<div class="table-responsive">
 <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Ações</th> <!-- Corrigi o nome da coluna -->
-    </tr>
-  </thead>
-  <tbody>
+<thead class=" text-primary">
+<th>
+ID
+</th>
+<th>
+Nome
+</th>
+<th>
+Editar
+</th>
+</thead>
+<tbody>
     <?php foreach ($tipos as $tipos): ?>
     <tr>
       <th scope="row"><?= $tipos['Tipos']['id']?></th>

@@ -1,92 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TESTE </title>
+	<title>Sistema clinica</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <link href="app/webroot/css/material.css" rel="stylesheet" />
 <link href="app/webroot/css/demo.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-<header>
-<nav>
 <div class="wrapper ">
 <div class="sidebar" data-color="purple" data-background-color="white">
 <div class="logo"><a  class="simple-text logo-normal">
-Creative Tim
+Sistema clinica
 </a></div>
 <div class="sidebar-wrapper">
 <ul class="nav">
-<li class="nav-item active  ">
-<a class="nav-link" href="">
-<i class="material-icons">dashboard</i>
-<p>Dashboard</p>
+<li class="nav-item">
+<a class="nav-link Button-nav" onclick="HomePage()">
+<i class="fas fa-user-md"></i>
+<p>Doutores</p>
 </a>
 </li>
 <li class="nav-item ">
-<a class="nav-link">
-<i class="material-icons">person</i>
-<p>User Profile</p>
+<a onclick="PaciPage()" class="nav-link Button-nav">
+<i class="fa-solid fa-user"></i>
+<p>Pacientes</p>
 </a>
 </li>
 <li class="nav-item ">
-<a class="nav-link">
-<i class="material-icons">content_paste</i>
-<p>Table List</p>
+<a onclick="callConsultas()" class="nav-link Button-nav">
+<i class="fa-solid fa-clock"></i>
+<p>Consultas</p>
+</a> 
+</li>
+<li class="nav-item ">
+<a onclick="tipoPage()" class="nav-link Button-nav" >
+<i class="fa-solid fa-book-open"></i>
+<p>Tipos de consulta</p>
 </a>
 </li>
 <li class="nav-item ">
-<a class="nav-link" >
-<i class="material-icons">library_books</i>
-<p>Typography</p>
-</a>
-</li>
-<li class="nav-item ">
-<a class="nav-link">
-<i class="material-icons">bubble_chart</i>
-<p>Icons</p>
-</a>
-</li>
-<li class="nav-item ">
-<a class="nav-link">
-<i class="material-icons">location_ons</i>
-<p>Maps</p>
-</a>
-</li>
-<li class="nav-item ">
-<a class="nav-link">
-<i class="material-icons">notifications</i>
-<p>Notifications</p>
-</a>
-</li>
-<li class="nav-item ">
-<button class="btn" onclick="ConvesPage()">
-<a class="nav-link" >
-<i class="material-icons">language</i>
-<p>teste Convenio</p>
-</button>
+<a class="nav-link  Button-nav" onclick="ConvesPage()">
+<i class="fa-solid fa-globe"></i>
+<p>Convenios</p>
 </a>
 </li>
 </ul>
 </div>
 </div>
-  <!-- <div class="">
-    <button onclick="HomePage()"  class="btn navbar-brand text-white" >
-      <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-	   Teste
-</button>
-
-<button onclick="callConsultas()">teste Consultas</button>
-<button onclick="PaciPage()">teste Pacientes</button>
-<button onclick="tipoPage()">teste Tipos de consulta</button>
-  </div> -->
-</nav>
-
-
-</header>
-	<main class="m-4">
+	<main class="main-panel mt-4">
 	<section>
 	<?php echo $this->fetch('content'); ?>
 	</section >
@@ -103,5 +69,7 @@ Creative Tim
 	<script src="app/webroot/js/consultas_chamadas.js"></script>
 	<script src="app/webroot/js/paciente_chamadas.js"></script>
 	<script src="app/webroot/js/tipos_chamadas.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 </body>
 </html>

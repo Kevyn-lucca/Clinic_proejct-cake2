@@ -16,16 +16,12 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="mb-3">
-        <label for="tipo_id">Tipo de Consulta:</label>
+    <div class="mb-3 d-flex justify-content-around">
         <select class="form-control" required name="tipo_id" id="tipo_id">
             <?php foreach ($tipos as $tipo): ?>
                 <option value="<?= $tipo['Tipos']['id'] ?>"><?= $tipo['Tipos']['nome'] ?></option>
             <?php endforeach; ?>
         </select>
-    </div>
-    <div class="mb-3">
-        <label for="convenio_id">Convênio:</label>
         <select class="form-control" required name="convenio_id" id="convenio_id">
             <?php foreach ($convenios as $convenio): ?>
                 <option value="<?= $convenio['Convenios']['id'] ?>"><?= $convenio['Convenios']['nome'] ?></option>
@@ -33,8 +29,8 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="data">Data da Consulta:</label>
-        <input class="form-control" type="date" id="data" name="data" required>
+        <label for="data_consulta">Data da Consulta:</label>
+        <input class="form-control" type="date" id="data_consulta" name="data_consulta" required>
     </div>
     <div class="mb-3">
         <label for="hora">Hora da Consulta:</label>

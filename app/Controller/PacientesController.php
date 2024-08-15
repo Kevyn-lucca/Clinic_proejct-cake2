@@ -45,9 +45,13 @@ class PacientesController extends AppController {
             }    
         }
     }
+    
 
     public function edit($id = null) {
         $this->layout = 'ajax';
+        $convenio = $this->Convenios->find("all");  
+        $this->set('Convenios', $convenio);
+
         if (!$id) {
             throw new NotFoundException(__('Invalid data'));
         }
