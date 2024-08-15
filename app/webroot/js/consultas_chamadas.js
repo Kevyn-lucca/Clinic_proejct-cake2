@@ -44,18 +44,6 @@ function ConsultasDelete(id){
 }
 
 
-function ConsultasRebook(id){
-	$.ajax({
-		method: "POST",
-		url: `Consultas/rebook/${id}`,
-		success: () => {
-			callConsultas()
-		}
-	})
-}
-
-
-
 function ConsultasAdd(){
 	$.ajax({
 		method: "GET",
