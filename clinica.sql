@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/08/2024 às 23:58
+-- Tempo de geração: 15/08/2024 às 04:45
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -42,12 +42,26 @@ CREATE TABLE `consultas` (
 --
 
 INSERT INTO `consultas` (`id`, `paciente_id`, `doutor_id`, `tipo_id`, `convenio_id`, `data`, `hora`) VALUES
-(5, 1, 1, 1, 1, '2024-08-15', '09:00:00'),
-(6, 2, 2, 2, 2, '2024-08-16', '10:30:00'),
-(7, 3, 3, 3, 3, '2024-08-17', '14:00:00'),
-(8, 1, 1, 1, 1, '2024-08-15', '09:00:00'),
-(9, 2, 2, 2, 2, '2024-08-16', '10:30:00'),
-(10, 3, 3, 3, 3, '2024-08-17', '14:00:00');
+(18, 1, 1, 1, 1, '0000-00-00', '00:00:00'),
+(19, 1, 1, 1, 1, '2024-08-15', '09:00:00'),
+(20, 2, 2, 2, 2, '2024-08-16', '10:30:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `consultas_desmarcadas`
+--
+
+CREATE TABLE `consultas_desmarcadas` (
+  `id` int(11) NOT NULL,
+  `paciente_id` int(11) NOT NULL,
+  `doutor_id` int(11) NOT NULL,
+  `tipo_id` int(11) NOT NULL,
+  `convenio_id` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `hora` time NOT NULL,
+  `data_delecao` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -91,7 +105,7 @@ INSERT INTO `doutor` (`id`, `nome`, `crm`, `created`) VALUES
 (1, 'Dr. João Almeida', '12345-SP', '2024-08-12 16:20:06'),
 (2, 'Dr. Laura Santos', '67890-RJ', '2024-08-12 16:20:06'),
 (3, 'Dr. Felipe Pereira', '23456-MG', '2024-08-12 16:20:06'),
-(19, '231232', 'dasdad', '2024-08-13 19:54:22');
+(22, 'eqeqw', 'ewqeqwe', '2024-08-14 18:45:15');
 
 -- --------------------------------------------------------
 
@@ -114,7 +128,10 @@ INSERT INTO `pacientes` (`id`, `nome`, `nascimento`, `convenio_id`) VALUES
 (1, 'Maria Oliveira', '1980-05-10', 1),
 (2, 'José Silva', '1975-11-22', 2),
 (3, 'Ana Costa', '1990-01-30', 3),
-(4, 'Carlos Santos', '1985-09-15', 4);
+(7, 'SDADSDSA', '0000-00-00', NULL),
+(8, 'SDADSDSA', '0000-00-00', NULL),
+(11, 'dsfdsf', '0123-03-31', 2),
+(12, 'Kevyn', '0222-11-22', 3);
 
 -- --------------------------------------------------------
 
@@ -132,10 +149,10 @@ CREATE TABLE `tipo_consulta` (
 --
 
 INSERT INTO `tipo_consulta` (`id`, `nome`) VALUES
-(1, 'Consulta Geral'),
+(1, 'Consulta especifica'),
 (2, 'Consulta Cardiológica'),
 (3, 'Consulta Neurológica'),
-(4, 'Consulta Pediátrica');
+(6, 'Consulta Geralizada');
 
 --
 -- Índices para tabelas despejadas
@@ -145,6 +162,16 @@ INSERT INTO `tipo_consulta` (`id`, `nome`) VALUES
 -- Índices de tabela `consultas`
 --
 ALTER TABLE `consultas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `paciente_id` (`paciente_id`),
+  ADD KEY `doutor_id` (`doutor_id`),
+  ADD KEY `tipo_id` (`tipo_id`),
+  ADD KEY `convenio_id` (`convenio_id`);
+
+--
+-- Índices de tabela `consultas_desmarcadas`
+--
+ALTER TABLE `consultas_desmarcadas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `paciente_id` (`paciente_id`),
   ADD KEY `doutor_id` (`doutor_id`),
@@ -184,31 +211,37 @@ ALTER TABLE `tipo_consulta`
 -- AUTO_INCREMENT de tabela `consultas`
 --
 ALTER TABLE `consultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de tabela `consultas_desmarcadas`
+--
+ALTER TABLE `consultas_desmarcadas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `convenios`
 --
 ALTER TABLE `convenios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `doutor`
 --
 ALTER TABLE `doutor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `tipo_consulta`
 --
 ALTER TABLE `tipo_consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
@@ -222,6 +255,15 @@ ALTER TABLE `consultas`
   ADD CONSTRAINT `consultas_ibfk_2` FOREIGN KEY (`doutor_id`) REFERENCES `doutor` (`id`),
   ADD CONSTRAINT `consultas_ibfk_3` FOREIGN KEY (`tipo_id`) REFERENCES `tipo_consulta` (`id`),
   ADD CONSTRAINT `consultas_ibfk_4` FOREIGN KEY (`convenio_id`) REFERENCES `convenios` (`id`);
+
+--
+-- Restrições para tabelas `consultas_desmarcadas`
+--
+ALTER TABLE `consultas_desmarcadas`
+  ADD CONSTRAINT `consultas_desmarcadas_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `pacientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultas_desmarcadas_ibfk_2` FOREIGN KEY (`doutor_id`) REFERENCES `doutor` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultas_desmarcadas_ibfk_3` FOREIGN KEY (`tipo_id`) REFERENCES `tipo_consulta` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultas_desmarcadas_ibfk_4` FOREIGN KEY (`convenio_id`) REFERENCES `convenios` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `pacientes`
