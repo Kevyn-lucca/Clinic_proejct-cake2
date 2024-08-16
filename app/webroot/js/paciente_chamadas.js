@@ -54,9 +54,13 @@ function PaciCallAdd(){
 }
 
 
-
-
 function addPaci() {
+	let nome = $("#nome").val().trim();
+	let data = $("#nascimento").val().trim();
+    if (!nome || data == "0000-00-00" || !data) {
+        alert("Por favor, preencha o campo Nome."); 
+        return false; 
+    } else {
 	let formdata = $("#PacientesAddForm").serialize();
 	$.ajax({
 		method: "POST",
@@ -65,9 +69,7 @@ function addPaci() {
 		success: () => {
 			$("#MainModal").modal("toggle");
 			PaciPage()
-		},
+		}
 	});
 }
-
-
-
+}

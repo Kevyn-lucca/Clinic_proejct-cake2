@@ -20,6 +20,10 @@ function GetConvesEdit(id) {
 }
 
 function ConvesEdit(id){
+	let nomeEdit = $("#nome").val().trim();
+    if (!nomeEdit) {
+        return false; 
+    } else {
 	let formdata = $("#ConvsEditForm").serialize();
 	$.ajax({
 		method: "POST",
@@ -31,7 +35,7 @@ function ConvesEdit(id){
 		},
 	});
 }
-
+}
 function ConvesDelete(id){
 	$.ajax({
 		method: "DELETE",
@@ -55,14 +59,19 @@ function ConvesCallAdd(){
 
 
 function addConves() {
-	let formdata = $("#ConvesAddForm").serialize();
-	$.ajax({
-		method: "POST",
-		url: "convenios/add/",
-		data: formdata,
-		success: () => {
-			$("#MainModal").modal("toggle");
-			ConvesPage();
-		},
-	});
+    let nome = $("#nome").val().trim();
+    if (!nome) {
+        return false; 
+    } else {
+        let formdata = $("#ConvesAddForm").serialize();   
+        $.ajax({
+            method: "POST",
+            url: "convenios/add/",
+            data: formdata,
+            success: () => {
+                $("#MainModal").modal("toggle"); // Fecha o modal
+                ConvesPage(); // Atualiza a página ou executa alguma função
+            }
+        });
+    }
 }

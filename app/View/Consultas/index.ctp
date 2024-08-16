@@ -28,26 +28,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         <?php foreach ($consultas as $consulta): ?>
                                             <?php if (isset($consulta['Consulta'])): ?>
+                                                <?php
+                                                $dataAmericana = $consulta['Consulta']['data_consulta'];
+                                                $data = new DateTime($dataAmericana);
+                                                $dataBrasileira = $data->format('d/m/Y'); ?>
                                                 <tr class="<?= $consulta['Consulta']['marcado'] ? '' : 'table-warning' ?>">
                                                     <th scope="row"><?php echo h($consulta['Consulta']['id']); ?></th>
                                                     <td><?php echo h($consulta['Paciente']['paciente_nome']); ?></td>
                                                     <td><?php echo h($consulta['Medico']['medico_nome']); ?></td>
                                                     <td><?php echo h($consulta['Tipo']['tipo_nome']); ?></td>
                                                     <td><?php echo h($consulta['Convenio']['convenio_nome']); ?></td>
-                                                    <td><?php echo h($consulta['Consulta']['data_consulta']); ?></td>
+                                                    <td><?php echo h($dataBrasileira);?></td>
                                                     <td><?php echo h($consulta['Consulta']['hora']); ?></td>
                                                     <td>
                                                         <?php if ($consulta['Consulta']['marcado']): ?>
-                                                            <button class="btn btn-danger" onclick="ConsultasDelete(<?= h($consulta['Consulta']['id']) ?>)">
+                                                            <button class="btn btn-danger" onclick="ConsultasToggle(<?= h($consulta['Consulta']['id']) ?>)">
                                                                 Desmarcar
                                                             </button>
                                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" onclick="GetConsultasEdit(<?= h($consulta['Consulta']['id']) ?>)">
                                                                 Editar
                                                             </button>
                                                         <?php else: ?>
-                                                            <button class="btn btn-success" onclick="ConsultasDelete(<?= h($consulta['Consulta']['id']) ?>)">
+                                                            <button class="btn btn-success" onclick="ConsultasToggle(<?= h($consulta['Consulta']['id']) ?>)">
                                                                 Remarcar
                                                             </button>
                                                         <?php endif; ?>

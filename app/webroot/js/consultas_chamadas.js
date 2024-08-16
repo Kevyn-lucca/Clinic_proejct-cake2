@@ -33,10 +33,10 @@ function ConsultasEdit(id){
 	});
 }
 
-function ConsultasDelete(id){
+function  ConsultasToggle(id){
 	$.ajax({
 		method: "POST",
-		url: `Consultas/delete/${id}`,
+		url: `Consultas/toggle/${id}`,
 		success: () => {
 			callConsultas()
 		}

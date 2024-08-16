@@ -52,44 +52,138 @@ class ConsultasController extends AppController {
             $this->set('consultas', $consultas);
         }
 
-    public function add() {
-        $this->layout = 'ajax';
-        if($this->request->is('post')){ 
-            $this->Consulta->create();
-           $this->Consulta->save($this->request->data); 
+        public function add() {
+            $this->layout = 'ajax';
         
+            if ($this->request->is('post')) {
+                $this->Consulta->create();
+                $this->Consulta->set($this->request->data);
+        
+                // Regras de validação
+                $this->Consulta->validate = [
+                    'paciente_id' => [
+                        'rule' => 'notBlank',
+                        'message' => 'O campo Paciente é obrigatório.'
+                    ],
+                    'doutor_id' => [
+                        'rule' => 'notBlank',
+                        'message' => 'O campo Doutor é obrigatório.'
+                    ],
+                    'tipo_id' => [
+                        'rule' => 'notBlank',
+                        'message' => 'O campo Tipo é obrigatório.'
+                    ],
+                    'convenio_id' => [
+                        'rule' => 'notBlank',
+                        'message' => 'O campo Convênio é obrigatório.'
+                    ],
+                    'data' => [
+                        'rule' => ['date', 'ymd'],
+                        'message' => 'Por favor, insira uma data válida.'
+                    ]
+                ];
+        
+                // Validar os dados antes de salvar
+                if ($this->Consulta->validates()) {
+                    if ($this->Consulta->save($this->request->data)) {
+                        $response = ['success' => true, 'message' => 'Consulta adicionada com sucesso.'];
+                    } else {
+                        $response = ['success' => false, 'message' => 'Ocorreu um erro ao salvar a consulta.'];
+                    }
+                } else {
+                    // Retornar mensagens de erro de validação
+                    $errors = $this->Consulta->validationErrors;
+                    $response = ['success' => false, 'errors' => $errors];
+                }
+        
+                // Retornar resposta em JSON
+                $this->set('response', $response);
+                $this->set('_serialize', 'response');
+            }
+        
+            // Preparar os dados para o formulário
+            $pacientes = $this->Paciente->find('all');
+            $medicos = $this->Medics->find('all');
+            $tipos = $this->Tipos->find('all');
+            $convenios = $this->Convenios->find('all');
+            $this->set(compact('pacientes', 'medicos', 'tipos', 'convenios'));
         }
-
         
-        // Prepara os dados para o formulário
-        $pacientes = $this->Paciente->find('all');
-        $medicos = $this->Medics->find('all');
-        $tipos = $this->Tipos->find('all');
-        $convenios = $this->Convenios->find('all');
-        $this->set(compact('pacientes', 'medicos', 'tipos', 'convenios'));
-    }
 
     public function edit($id = null) {
         $this->layout = 'ajax';
+    
         if (!$id) {
-            throw new NotFoundException(__('Invalid data'));
+            throw new NotFoundException(__('Dados inválidos'));
         }
-        
-        if ($this->request->is(array('post', 'put'))) {
-            $this->Consulta->id = $id;
-            $this->Consulta->save($this->request->data); 
+    
+        // Buscar consulta pelo ID
+        $consulta = $this->Consulta->findById($id);
+        if (!$consulta) {
+            throw new NotFoundException(__('Consulta não encontrada'));
         }
-
-        $consultas = $this->Consulta->findById($id);
-        $this->set('consultas', $consultas);
+    
+        $this->set('consultas', $consulta);
+    
+        // Buscar dados para dropdowns
         $pacientes = $this->Paciente->find('all');
         $medicos = $this->Medics->find('all');
         $tipos = $this->Tipos->find('all');
         $convenios = $this->Convenios->find('all');
         $this->set(compact('pacientes', 'medicos', 'tipos', 'convenios'));
+    
+        // Regras de validação
+        $this->Consulta->validate = [
+            'paciente_id' => [
+                'rule' => 'notBlank',
+                'message' => 'O campo Paciente é obrigatório.'
+            ],
+            'doutor_id' => [
+                'rule' => 'notBlank',
+                'message' => 'O campo Doutor é obrigatório.'
+            ],
+            'tipo_id' => [
+                'rule' => 'notBlank',
+                'message' => 'O campo Tipo é obrigatório.'
+            ],
+            'convenio_id' => [
+                'rule' => 'notBlank',
+                'message' => 'O campo Convênio é obrigatório.'
+            ],
+            'data' => [
+                'rule' => ['date', 'ymd'],
+                'message' => 'Por favor, insira uma data válida.'
+            ]
+        ];
+    
+        if ($this->request->is(array('post', 'put'))) {
+            $this->Consulta->id = $id;
+            $this->Consulta->set($this->request->data);
+    
+            // Validar os dados antes de salvar
+            if ($this->Consulta->validates()) {
+                if ($this->Consulta->save($this->request->data)) {
+                    $response = ['success' => true, 'message' => 'Consulta atualizada com sucesso.'];
+                } else {
+                    $response = ['success' => false, 'message' => 'Ocorreu um erro ao salvar a consulta.'];
+                }
+            } else {
+                // Retornar mensagens de erro de validação
+                $errors = $this->Consulta->validationErrors;
+                $response = ['success' => false, 'errors' => $errors];
+            }
+    
+            // Retornar resposta em JSON
+            $this->set('response', $response);
+            $this->set('_serialize', 'response');
+        } else {
+            // Preencher os dados do formulário com as informações da consulta se o formulário não foi submetido
+            $this->request->data = $consulta;
+        }
     }
+    
 
-    public function delete($id = null) {
+    public function toggle($id = null) {
         $this->layout = 'ajax';
         $this->Consulta->id = $id;
     
@@ -97,17 +191,25 @@ class ConsultasController extends AppController {
             throw new NotFoundException(__('Consulta inválida'));
         }
     
-        $this->request->onlyAllow('post', 'delete');
+        $this->request->onlyAllow('post');
     
-        // Atualiza o valor booleano da consulta original para 1 (desmarcada)
-        if ($this->Consulta->saveField('desmarcada', 1)) {
-            $this->Session->setFlash(__('Consulta desmarcada com sucesso.'));
+        // Obtem o valor atual do campo 'marcado'
+        $consulta = $this->Consulta->findById($id);
+        $marcado = $consulta['Consulta']['marcado'];
+    
+        // Alterna o valor de 'marcado'
+        $novoValor = $marcado ? 0 : 1;
+    
+        if ($this->Consulta->saveField('marcado', $novoValor)) {
+            $mensagem = $novoValor ? 'Consulta remarcada com sucesso.' : 'Consulta desmarcada com sucesso.';
+            $this->Session->setFlash(__($mensagem));
         } else {
-            $this->Session->setFlash(__('Não foi possível desmarcar a consulta. Por favor, tente novamente.'));
+            $this->Session->setFlash(__('Não foi possível alterar o estado da consulta. Por favor, tente novamente.'));
         }
     
         return $this->redirect(array('action' => 'index'));
     }
+    
     
 
 }

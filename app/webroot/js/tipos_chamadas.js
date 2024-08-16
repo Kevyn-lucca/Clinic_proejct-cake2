@@ -20,6 +20,11 @@ function GetTipoEdit(id) {
 }
 
 function tipoEdit(id) {
+	let nomeEdit = $("#nomeTipo").val().trim();
+    if (!nomeEdit) {
+        alert("Por favor, preencha o campo Nome."); 
+        return false; 
+    } else {
 	let formdata = $("#TipoEditForm").serialize();
 	$.ajax({
 		method: "POST",
@@ -31,7 +36,7 @@ function tipoEdit(id) {
 		},
 	});
 }
-
+}
 function tipoDelete(id) {
 	$.ajax({
 		method: "DELETE",
@@ -54,6 +59,11 @@ function tipoCallAdd() {
 }
 
 function addTipo() {
+	let nomeEdit = $("#nomeTipo").val().trim();
+    if (!nomeEdit) {
+        alert("Por favor, preencha o campo Nome."); 
+        return false; 
+    } else {
 	let formdata = $("#TipoAddForm").serialize();
 	$.ajax({
 		method: "POST",
@@ -64,4 +74,5 @@ function addTipo() {
 			tipoPage();
 		},
 	});
+}
 }

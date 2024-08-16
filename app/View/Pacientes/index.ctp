@@ -26,7 +26,7 @@ Nome
 Convenio
 </th>
 <th>
-Nascimento
+Idade
 </th>
 <th>
 Editar
@@ -34,13 +34,20 @@ Editar
 </thead>
 <tbody>
 <?php foreach ($pacientes as $paciente): ?>
+<?php
+    $dataNascimento = $paciente['Paciente']['nascimento'];
+    $data = new DateTime($dataNascimento);
+    $anoAtual = (int) date('Y');
+    $anoData = (int) $data->format('Y');
+    $diferencaAno =  $anoAtual - $anoData;
+?>
     <tr>
       <th scope="row"><?= $paciente['Paciente']['id']?></th>
       <td>
       <?= h($paciente['Paciente']['nome'])?>
       </td>
       <td><?=h($paciente['Convenios']['nome'])?></td>
-      <td><?=h($paciente['Paciente']['nascimento'])?></td>
+      <td><?=h($diferencaAno)?></td>
       <td>         
         <button class="btn btn-danger" onclick="PaciDelete(<?= $paciente['Paciente']['id']?>)">
             Deletar

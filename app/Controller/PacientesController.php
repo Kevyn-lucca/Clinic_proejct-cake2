@@ -32,48 +32,115 @@ class PacientesController extends AppController {
 
     public function add() {
         $this->layout = 'ajax';
-        
-        $convenio = $this->Convenios->find("all");  
+    
+        // Carregar os convênios para o formulário
+        $convenio = $this->Convenios->find("all");
         $this->set('Convenios', $convenio);
-
+    
         if ($this->request->is('post')) {
             $this->Paciente->create();
-            if ($this->Paciente->save($this->request->data)) {
-                // Mensagem de sucesso ou redirecionamento, se necessário
+            
+            // Definir as regras de validação
+            $this->Paciente->set($this->request->data);
+            
+            // Regras de validação
+            $this->Paciente->validate = [
+                'nome' => [
+                    'rule' => 'notBlank',
+                    'message' => 'O campo Nome é obrigatório.'
+                ],
+                'nascimento' => [
+                    'rule' => ['date', 'ymd'],
+                    'message' => 'Por favor, insira uma data de nascimento válida.'
+                ],
+                'convenio_id' => [
+                    'rule' => 'notBlank',
+                    'message' => 'Por favor, selecione um convênio.'
+                ]
+            ];
+            
+            // Validar os dados antes de salvar
+            if ($this->Paciente->validates()) {
+                if ($this->Paciente->save($this->request->data)) {
+                    $response = ['success' => true, 'message' => 'Paciente adicionado com sucesso.'];
+                } else {
+                    $response = ['success' => false, 'message' => 'Ocorreu um erro ao salvar o paciente.'];
+                }
             } else {
-                // Mensagem de erro, se necessário
-            }    
+                // Retornar mensagens de erro de validação
+                $errors = $this->Paciente->validationErrors;
+                $response = ['success' => false, 'errors' => $errors];
+            }
+            
+            // Retornar resposta em JSON
+            $this->set('response', $response);
+            $this->set('_serialize', 'response');
         }
     }
     
 
     public function edit($id = null) {
         $this->layout = 'ajax';
+    
+        // Obter todos os convênios e configurar para a view
         $convenio = $this->Convenios->find("all");  
-        $this->set('Convenios', $convenio);
-
+        $this->set('convenios', $convenio);
+    
+        // Verificar se o ID foi passado
         if (!$id) {
-            throw new NotFoundException(__('Invalid data'));
+            throw new NotFoundException(__('Dados inválidos'));
         }
-
-        $paciente = $this->Paciente->findById($id); // Usar 'paciente' no singular
+    
+        // Buscar paciente pelo ID
+        $paciente = $this->Paciente->findById($id);
         if (!$paciente) {
             throw new NotFoundException(__('Paciente não encontrado'));
         }
-
-        $this->set('paciente', $paciente); // Usar 'paciente' no singular
-
+    
+        $this->set('paciente', $paciente);
+    
+        // Regras de validação
+        $this->Paciente->validate = [
+            'nome' => [
+                'rule' => 'notBlank',
+                'message' => 'O campo Nome é obrigatório.'
+            ],
+            'nascimento' => [
+                'rule' => ['date', 'ymd'],
+                'message' => 'Por favor, insira uma data de nascimento válida.'
+            ],
+            'convenio_id' => [
+                'rule' => 'notBlank',
+                'message' => 'Por favor, selecione um convênio.'
+            ]
+        ];
+    
+        // Verificar se o formulário foi submetido com os métodos POST ou PUT
         if ($this->request->is(array('post', 'put'))) {
             $this->Paciente->id = $id;
-            if ($this->Paciente->save($this->request->data)) {
-                // Mensagem de sucesso ou redirecionamento, se necessário
+            $this->Paciente->set($this->request->data);
+    
+            // Validar os dados antes de salvar
+            if ($this->Paciente->validates()) {
+                if ($this->Paciente->save($this->request->data)) {
+                    $response = ['success' => true, 'message' => 'Paciente atualizado com sucesso.'];
+                } else {
+                    $response = ['success' => false, 'message' => 'Ocorreu um erro ao salvar o paciente.'];
+                }
             } else {
-                // Trate os erros de validação
+                // Retornar mensagens de erro de validação
+                $errors = $this->Paciente->validationErrors;
+                $response = ['success' => false, 'errors' => $errors];
             }
+    
+            // Retornar resposta em JSON
+            $this->set('response', $response);
+            $this->set('_serialize', 'response');
         }
-
+    
+        // Preencher os dados do formulário com as informações do paciente se o formulário não foi submetido
         if (!$this->request->data) {
-            $this->request->data = $paciente; // Usar 'paciente' no singular
+            $this->request->data = $paciente;
         }
     }
 
