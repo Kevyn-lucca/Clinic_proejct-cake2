@@ -32,7 +32,7 @@
                                         <?php foreach ($consultas as $consulta): ?>
                                             <?php if (isset($consulta['Consulta'])): ?>
                                                 <?php
-                                                $dataAmericana = $consulta['Consulta']['data_consulta'];
+                                                $dataAmericana = $consulta['Consulta']['data'];
                                                 $data = new DateTime($dataAmericana);
                                                 $dataBrasileira = $data->format('d/m/Y'); ?>
                                                 <tr class="<?= $consulta['Consulta']['marcado'] ? '' : 'table-warning' ?>">

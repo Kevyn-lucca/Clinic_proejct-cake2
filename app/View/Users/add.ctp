@@ -9,18 +9,31 @@ echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.c
 ?>
 
 
-<div class="users form">
-<?php echo $this->Form->create('User'); ?>
-    <fieldset>
-        <legend><?php echo __('Add User'); ?></legend>
-        <?php echo $this->Form->input('username');
-        echo $this->Form->input('password');
-        echo $this->Form->input('role', array(
-            'options' => array('admin' => 'Admin', 'author' => 'Author')
-        ));
-    ?>
-    </fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Cadastre-se como usuario</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/Clinic_proejct-cake2/Users/add" method="post">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input name="data[User][username]" type="text" id="username" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input name="data[User][password]" type="password" id="password" class="form-control" required>
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php
@@ -28,3 +41,5 @@ echo $this->Html->script('https://code.jquery.com/jquery-3.7.1.js', array('integ
 echo $this->Html->script('https://code.jquery.com/ui/1.14.0/jquery-ui.js', array('integrity' => 'sha256-u0L8aA6Ev3bY2HI4y0CAyr9H8FRWgX4hZ9+K7C2nzdc=', 'crossorigin' => 'anonymous'));
 echo $this->Html->script('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('integrity' => 'sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz', 'crossorigin' => 'anonymous'));
 ?>
+
+

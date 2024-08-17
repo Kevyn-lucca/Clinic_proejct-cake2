@@ -67,6 +67,3 @@ function deleteMedic(id){
 		}
 	})
 }
-
-
-HomePage()

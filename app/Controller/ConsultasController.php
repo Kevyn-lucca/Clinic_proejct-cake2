@@ -199,15 +199,8 @@ class ConsultasController extends AppController {
     
         // Alterna o valor de 'marcado'
         $novoValor = $marcado ? 0 : 1;
-    
-        if ($this->Consulta->saveField('marcado', $novoValor)) {
-            $mensagem = $novoValor ? 'Consulta remarcada com sucesso.' : 'Consulta desmarcada com sucesso.';
-            $this->Session->setFlash(__($mensagem));
-        } else {
-            $this->Session->setFlash(__('Não foi possível alterar o estado da consulta. Por favor, tente novamente.'));
-        }
-    
-        return $this->redirect(array('action' => 'index'));
+        $this->Consulta->saveField('marcado', $novoValor);
+
     }
     
     

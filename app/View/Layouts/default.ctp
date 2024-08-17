@@ -49,6 +49,7 @@ Sistema clinica
 <p>Convenios</p>
 </a>
 </li>
+<button onclick="logoutUser()">Logout</button>
 </ul>
 </div>
 </div>
@@ -69,5 +70,6 @@ Sistema clinica
 	<script src="app/webroot/js/consultas_chamadas.js"></script>
 	<script src="app/webroot/js/paciente_chamadas.js"></script>
 	<script src="app/webroot/js/tipos_chamadas.js"></script>
+	<script src="app/webroot/js/users_chamadas.js"></script>
 </body>
 </html>
