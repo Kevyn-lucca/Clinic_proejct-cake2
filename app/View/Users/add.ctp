@@ -8,27 +8,40 @@ echo $this->Html->css('demo.css'); // Assumindo que este arquivo está em app/we
 echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 ?>
 
+<style>
+    .container-left {
+        margin-left: 3rem;
+        margin-right: auto;
+    }
+</style>
 
-<div class="container mt-4">
+<div class="container container container-left mt-5">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Cadastre-se como usuario</h5>
+                    <h5 class="card-title text-center">Cadastre-se como usuario</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/Clinic_proejct-cake2/Users/add" method="post">
+                    <form method="post">
                         <fieldset>
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="username" class="form-label">Nome de usuario</label>
                                 <input name="data[User][username]" type="text" id="username" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">Senha</label>
                                 <input name="data[User][password]" type="password" id="password" class="form-control" required>
                             </div>
                         </fieldset>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="d-flex justify-content-around">
+                        <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                        <?php echo $this->Form->button(__('Sair'), [
+    'type' => 'button', 
+    'class' => 'btn btn-primary',
+ 'onclick' => 'window.location.href=\'' . $this->Html->url(['controller' => 'users', 'action' => 'login']) . '\''
+]); ?>
+    </div>
                     </form>
                 </div>
             </div>

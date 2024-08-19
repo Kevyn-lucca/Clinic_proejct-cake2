@@ -8,8 +8,15 @@ echo $this->Html->css('demo.css'); // Assumindo que este arquivo está em app/we
 echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 ?>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<style>
+    .container-left {
+        margin-left: 3rem;
+        margin-right: auto;
+    }
+</style>
+
+<div class="container container-left mt-5">
+    <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
@@ -30,21 +37,23 @@ echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.c
                             'label' => ['text' => __('Senha'), 'class' => 'form-label']
                         ]); ?>
                     </div>
-                    <div class="d-flex justify-content-around form-group text-center">
-                        <?php echo $this->Form->end(['label' => __('Login'), 'class' => 'btn btn-primary']); ?>
-                        <?php echo $this->Form->button(__('Add'), [
-        'type' => 'button', 
-        'class' => 'btn btn-primary',
-        'onclick' => 'window.location.href=\'' . $this->Html->url(['controller' => 'Users', 'action' => 'add']) . '\''
-    ]); ?>
-    <?php echo $this->Form->end(); ?>
+                    <div class="d-flex justify-content-around">
+                        <?php echo $this->Form->button(__('Login'), [
+                            'type' => 'submit', 
+                            'class' => 'btn btn-primary'
+                        ]); ?>
+                        <?php echo $this->Form->button(__('Cadastrar-se'), [
+                            'type' => 'button', 
+                            'class' => 'btn btn-primary',
+                            'onclick' => 'window.location.href=\'' . $this->Html->url(['controller' => 'users', 'action' => 'add']) . '\''
+                        ]); ?>
                     </div>
+                    <?php echo $this->Form->end(); ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <?php
 echo $this->Html->script('https://code.jquery.com/jquery-3.7.1.js', array('integrity' => 'sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=', 'crossorigin' => 'anonymous'));
 echo $this->Html->script('https://code.jquery.com/ui/1.14.0/jquery-ui.js', array('integrity' => 'sha256-u0L8aA6Ev3bY2HI4y0CAyr9H8FRWgX4hZ9+K7C2nzdc=', 'crossorigin' => 'anonymous'));

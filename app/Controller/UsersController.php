@@ -4,49 +4,22 @@ App::uses('AppController', 'Controller');
 class UsersController extends AppController {
 
     public function beforeFilter() {
-       parent::beforeFilter();
-    $this->Auth->allow('login', 'add'); // Permitir acesso às ações de login e add
-
-    if ($this->request->is('ajax') && !$this->Auth->loggedIn() && $this->request->params['action'] != 'login') {
-        // Se a requisição for AJAX e o usuário não estiver autenticado, retorna um erro
-        $this->response->statusCode(401); // Código de status HTTP para não autorizado
-        $this->response->body(json_encode(array('status' => 'error', 'message' => 'Usuário não autenticado.')));
-        $this->set('_serialize', array('response'));
-        $this->render('ajax_error'); // Renderizar um layout específico para erros AJAX
-        return false; // Impedir que o método continue
-    }
+        parent::beforeFilter();
+        // Allow users to register and logout.
+        $this->Auth->allow('add', 'logout');
     }
     
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
-                if ($this->request->is('ajax')) {
-                    // Resposta JSON para AJAX
-                    $this->set('response', array('status' => 'success', 'message' => 'Login bem-sucedido.'));
-                    $this->layout = 'ajax'; // Usar um layout de AJAX, se necessário
-                } else {
-                    // Redirecionamento normal para não-AJAX
-                    return $this->redirect($this->Auth->redirectUrl());
-                }
-            } else {
-                if ($this->request->is('ajax')) {
-                    // Resposta JSON para AJAX
-                    $this->set('response', array('status' => 'error', 'message' => 'Usuário ou senha incorretos.'));
-                    $this->layout = 'ajax'; // Usar um layout de AJAX, se necessário
-                } else {
-                    // Redirecionamento normal para não-AJAX
-                    $this->Flash->error(__('Usuário ou senha incorretos.'));
-                }
+                return $this->redirect($this->Auth->redirectUrl());
             }
-        }
-        if ($this->request->is('ajax')) {
-            // Definir o layout para AJAX, se necessário
-            $this->layout = 'ajax';
+            $this->Flash->error(__('Invalid username or password, try again'));
         }
     }
     
     public function logout() {
-        return $this->Auth->logout();
+        $this->Auth->logout();
     }
 
     public function index() {
@@ -57,7 +30,7 @@ class UsersController extends AppController {
     public function view($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Usuário inválido'));
+            throw new NotFoundException(__('Invalid user'));
         }
         $this->set('user', $this->User->findById($id));
     }
@@ -65,41 +38,51 @@ class UsersController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             $this->User->create();
-            $this->User->save($this->request->data);
-            $this->redirect(array('controller' => 'Users', 'action' => 'login'));
+            if ($this->User->save($this->request->data)) {
+                $this->Flash->success(__('The user has been saved'));
+                return $this->redirect(array('action' => 'login'));
+            }
+            $this->Flash->error(
+                __('The user could not be saved. Please, try again.')
+            );
         }
     }
 
     public function edit($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Usuário inválido'));
+            throw new NotFoundException(__('Invalid user'));
         }
-        if ($this->request->is(array('post', 'put'))) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                $this->Flash->success(__('O usuário foi salvo com sucesso'));
+                $this->Flash->success(__('The user has been saved'));
                 return $this->redirect(array('action' => 'index'));
             }
-            $this->Flash->error(__('O usuário não pôde ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(
+                __('The user could not be saved. Please, try again.')
+            );
         } else {
             $this->request->data = $this->User->findById($id);
             unset($this->request->data['User']['password']);
         }
     }
-    
+
     public function delete($id = null) {
+        // Prior to 2.5 use
+        // $this->request->onlyAllow('post');
+
         $this->request->allowMethod('post');
 
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Usuário inválido'));
+            throw new NotFoundException(__('Invalid user'));
         }
         if ($this->User->delete()) {
-            $this->Flash->success(__('Usuário excluído'));
+            $this->Flash->success(__('User deleted'));
             return $this->redirect(array('action' => 'index'));
         }
-        $this->Flash->error(__('Usuário não pôde ser excluído'));
+        $this->Flash->error(__('User was not deleted'));
         return $this->redirect(array('action' => 'index'));
     }
+
 }
-?>
