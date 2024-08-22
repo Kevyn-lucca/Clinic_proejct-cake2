@@ -200,7 +200,6 @@ class ConsultasController extends AppController {
         // Alterna o valor de 'marcado'
         $novoValor = $marcado ? 0 : 1;
         $this->Consulta->saveField('marcado', $novoValor);
-
     }
     
     

@@ -5,7 +5,6 @@ class Paciente extends AppModel {
         'Consulta' => array(
             'className' => 'Consulta',
             'foreignKey' => 'paciente_id',
-            'dependent' => true // Configura a exclusão em cascata
         )
     );
 

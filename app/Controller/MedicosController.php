@@ -23,7 +23,7 @@ class MedicosController extends AppController
     
         if ($this->request->is('post')) {
             $this->Medics->create();
-            $this->Medics->set($this->request->data);
+            $this->Medics->set($this->request->data,'teste');
     
             // Regras de validação
             $this->Medics->validate = [

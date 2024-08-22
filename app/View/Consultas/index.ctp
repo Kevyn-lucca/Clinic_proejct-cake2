@@ -20,7 +20,7 @@
                                             <th>ID</th>
                                             <th>Paciente</th>
                                             <th>Médico</th>
-                                            <th>Tipo de Consulta</th>
+                                            <th>Tipo</th>
                                             <th>Convênio</th>
                                             <th>Data</th>
                                             <th>Hora</th>
@@ -28,7 +28,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
                                         <?php foreach ($consultas as $consulta): ?>
                                             <?php if (isset($consulta['Consulta'])): ?>
                                                 <?php

@@ -20,23 +20,23 @@ echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.c
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title text-center">Cadastre-se como usuario</h5>
+                    <h3 class="card-title text-center">Cadastre-se como usuario</h3>
                 </div>
                 <div class="card-body">
                     <form method="post">
                         <fieldset>
                             <div class="mb-3">
-                                <label for="username" class="form-label">Nome de usuario</label>
+                                <label for="username" class="form-label text-black">Nome de usuario</label>
                                 <input name="data[User][username]" type="text" id="username" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Senha</label>
+                                <label for="password" class="form-label text-black">Senha</label>
                                 <input name="data[User][password]" type="password" id="password" class="form-control" required>
                             </div>
                         </fieldset>
                         <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-primary">Cadastrar-se</button>
-                        <?php echo $this->Form->button(__('Sair'), [
+                        <?php echo $this->Form->button(__('Voltar'), [
     'type' => 'button', 
     'class' => 'btn btn-primary',
  'onclick' => 'window.location.href=\'' . $this->Html->url(['controller' => 'users', 'action' => 'login']) . '\''

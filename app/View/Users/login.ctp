@@ -8,19 +8,19 @@ echo $this->Html->css('demo.css'); // Assumindo que este arquivo está em app/we
 echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 ?>
 
-<style>
+<!-- <style>
     .container-left {
-        margin-left: 3rem;
+        margin-left: 2rem;
         margin-right: auto;
     }
-</style>
+</style> -->
 
-<div class="container container-left mt-5">
+<div class="container container-left mt-5 ml-2">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="card">
-                <div class="card-header text-center">
-                    <h4><?php echo __('insira seu nome de usuário e senha'); ?></h4>
+                <div class="card-header text-center pb-0">
+                    <h2 class= "mb-0">Login</h2>
                 </div>
                 <div class="card-body">
                     <?php echo $this->Flash->render('auth'); ?>
@@ -28,13 +28,13 @@ echo $this->Html->css('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.c
                     <div class="form-group">
                         <?php echo $this->Form->input('username', [
                             'class' => 'form-control',
-                            'label' => ['text' => __('Nome de Usuário'), 'class' => 'form-label']
+                            'label' => ['text' => __('Nome de Usuário'), 'class' => 'form-label text-black']
                         ]); ?>
                     </div>
                     <div class="form-group">
                         <?php echo $this->Form->input('password', [
                             'class' => 'form-control',
-                            'label' => ['text' => __('Senha'), 'class' => 'form-label']
+                            'label' => ['text' => __('Senha'), 'class' => 'form-label text-black']
                         ]); ?>
                     </div>
                     <div class="d-flex justify-content-around">
